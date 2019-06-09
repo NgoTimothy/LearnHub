@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* Style all input fields */
+input[class=signup] {
+  width: 98%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: content-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+}
+  
+
+body {
+    background-color: black;
+}
+
+/* Style the submit button */
+input[type=submit] {
+  background-color: orange;
+  color: black;
+}
+
+/* Style the container for inputs */
+.container {
+  background-color: #f1f1f1;
+  padding: 20px;
+}
+
+/* The message box is shown when the user clicks on the password field */
+#newPswMessage, #confirmPswMessage, #newUsrMessage, #newEmailMessage, #newPhoneNumberMessage  {
+  display:none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+#newPswMessage p, #confirmPswMessage p, #newUsrMessage p, #newEmailMessage p, #newPhoneNumberMessage p {
+  padding: 10px 35px;
+  font-size: 18px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "✔";
+}
+
+/* Add a red text color and an "x" when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "✖";
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="main.css">
+<script src="nav.js"></script>
+</head>
+<body>
+
+	<div id="navbar">
+		<div id="contents">
+			<a href="index.html"><img id="logo" src="images/learnhub2.png" /></a>
+		
+		<div id="menu">
+		<img onclick="menu()" src="images/menu.png" />
+		</div>
+		
+		<div id="login" onclick="login()">
+		<p>Login</p>
+		</div>
+			
+		<a href="" >
+			<div class="link">
+			<p>Classrooms</p>
+			</div>
+		</a>
+		<a href="" >
+			<div class="link">
+			<p>Study Tips</p>
+			</div>
+		</a>
+		<a href="" >
+			<div class="link">
+			<p>Teachers</p>
+			</div>
+		</a>
+		<a href="" >
+			<div class="link">
+			<p>Study Now</p>
+			</div>
+		</a>	
+			
+		</div> <!-- end contents -->
+		
+	</div> <!-- end navbar -->
+
+
+<h3>Password Validation</h3>
+
+<p>Try to submit the form.</p>
+
+<div class="container">
+  <form action="register.php" onsubmit="return usernameInput(newUserInput.value.length) && emailInput(newEmailInput.value) && phoneInput(newPhoneInput.value) && passwordInput(newPasswordInput.value) && confirmInput(confirmPswInput.value);">
+    <label for="newUsrname">Username</label>
+    <input class = signup type="text" id="newUsrname" onkeyup="usernameInput(newUserInput.value.length)"name="newUsr" required>
+    
+    <label for="newEmail">Email</label>
+    <input class = signup type="text" id="newEmail" onkeyup="emailInput(newEmailInput.value)"name="newEmail" required>
+
+    <label for="newPhone">Phone Number</label>
+    <input class = signup type="text" id="newPhone" onkeyup="phoneInput(newPhoneInput.value)" name="newPhone" required>
+    
+    <label for="newPsw">Password</label>
+    <input class = signup type="password" id="newPsw" onkeyup="passwordInput(newPasswordInput.value)" name="newPsw" required>
+
+    <label for="confirmPsw">Confirm Password</label>
+    <input class = signup type="password" id="confirmPsw" onkeyup="confirmInput(confirmPswInput.value)" name="confirmPsw" required>
+	
+	<label for="acctType">Account Type</label>
+    <select name="acctType">
+		<option value="student">Student</option>
+		<option value="teacher">Teacher</option>
+	</select>
+    
+    <input class = signup type="submit" value="Sign up">
+  </form>
+</div>
+
+<div id="newUsrMessage">
+    <h3>Username must match following criteria:</h3>
+    <p id="usrLength" class="invalid">Minimum <b>5 characters</b> and maximum <b>20 characters</b></p>
+  </div>
+
+
+<div id="newEmailMessage">
+    <h3>Email must match following criteria:</h3>
+    <p id="emailSignature" class="invalid">Must have something before <b>@</b></p>
+    <p id="emailHost" class="invalid">The hosting service for your email is invalid</p>
+    <p id="emailEndSignature" class="invalid">The ending signature after <b>.</b> is invalid</p>
+</div>
+
+<div id="newPhoneNumberMessage">
+  <h3>Phone number formats XXX-XXX-XXXX or XXXXXXXXXX</h3>
+  <p id="phoneNumber" class="invalid">Phone number is valid</p>
+</div>
+
+<div id="newPswMessage">
+  <h3>Password must contain the following:</h3>
+  <p id="pswLetter" class="invalid">A <b>lowercase</b> letter</p>
+  <p id="pswCapital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+  <p id="pswNumber" class="invalid">A <b>number</b></p>
+  <p id="pswSpecial" class="invalid">A <b>special character</b></p>
+  <p id="pswLength" class="invalid">Minimum <b>8 characters</b> and maximum <b>15 characters</b></p>
+</div>
+
+<div id="confirmPswMessage">
+    <h3>Passwords must match</h3>
+    <p id="confirmPswMsg" class="invalid">Passwords match</p>
+  </div>
+  <script src="register.js"></script>
+  
+  <div id="footer">
+    <div id="footercontainer">
+    <div id="footlogo">
+    <img src="images/learnhub2.png" />
+    </div>
+    <div class="footcategory">
+    <h3>Account</h3>
+    <ul>
+      <a href=""><li>My Account</li></a>
+      <a href=""><li>Create Account</li></a>
+    </ul>
+    </div>
+    <div class="footcategory">
+    <h3>Pages</h3>
+    <ul>
+      <a href=""><li>Classrooms</li></a>
+      <a href=""><li>Study Tips</li></a>
+      <a href=""><li>Teachers</li></a>
+      <a href=""><li>Study Now</li></a>
+    </ul>
+    </div>
+    <div class="footcategory">
+    <h3>Support</h3>
+    <ul>
+      <a href=""><li>Contact Us</li></a>
+      <a href=""><li>Troubleshooting</li></a>
+      <a href=""><li>Teacher Tutorials</li></a>
+    </ul>
+    </div>
+    <p id="copyright">&copy; 2019 LearnHub. All Rights Reserved. <a href="">Site Map</a> - <a href="">Privacy Policy</a></p>
+    </div>
+    </div>
+    
+    <div id="loginscreen">
+      <div id="logincontainer">
+      <h3>Log In</h3>
+      <form>
+      <input type="text" name="username" placeholder="Username"><br />
+      <input type="password" name="username" placeholder="Password"><br />
+      <input id="submit" type="submit" value="Login">
+      </form>
+      <p>Don't have an account yet? <a href="registerWithHeaderAndFooter.html">Register Now</a></p>
+      </div>
+    </div>
+    
+    <div id="closelogin" onclick="login()"></div>
+
+
+</body>
+</html>

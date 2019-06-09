@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* Style all input fields */
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+}
+
+body {
+    background-color: black;
+}
+
+/* Style the submit button */
+input[type=submit] {
+  background-color: orange;
+  color: black;
+}
+
+/* Style the container for inputs */
+.container {
+  background-color: #f1f1f1;
+  padding: 20px;
+}
+
+/* The message box is shown when the user clicks on the password field */
+#newPswMessage, #confirmPswMessage, #newUsrMessage, #newEmailMessage, #newPhoneNumberMessage  {
+  display:none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+#newPswMessage p, #confirmPswMessage p, #newUsrMessage p, #newEmailMessage p, #newPhoneNumberMessage p {
+  padding: 10px 35px;
+  font-size: 18px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "✔";
+}
+
+/* Add a red text color and an "x" when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "✖";
+}
+</style>
+</head>
+<body>
+
+<h3>Password Validation</h3>
+<p>Try to submit the form.</p>
+
+<div class="container">
+  <form action="/action_page.php">
+    <label for="newUsrname">Username</label>
+    <input type="text" id="newUsrname" name="newUsrname" required>
+    
+    <label for="newEmail">Email</label>
+    <input type="text" id="newEmail" name="newEmail" required>
+
+    <label for="newPhone">Phone Number</label>
+    <input type="text" id="newPhone" name="newPhone" required>
+    
+    <label for="newPsw">Password</label>
+    <input type="password" id="newPsw" name="newPsw" required>
+
+    <label for="confirmPsw">Confirm Password</label>
+    <input type="password" id="confirmPsw" name="confirmPsw" required>
+    
+    <button type="button" onclick="checkValid()">Sign up</button>
+    <p id="failedSignUP"></p>	
+  </form>
+</div>
+<div id="newUsr">
+    
+</div>
+
+<div id="newUsrMessage">
+    <h3>Username must match following criteria:</h3>
+    <p id="usrLength" class="invalid">Minimum <b>5 characters</b> and maximum <b>20 characters</b></p>
+</div>
+
+<div id="newEmailMessage">
+    <h3>Email must match following criteria:</h3>
+    <p id="emailSignature" class="invalid">Must have something before <b>@</b></p>
+    <p id="emailHost" class="invalid">The hosting service for your email is invalid</p>
+    <p id="emailEndSignature" class="invalid">The ending signature after <b>.</b> is invalid</p>
+</div>
+
+<div id="newPhoneNumberMessage">
+  <h3>Phone number formats XXX-XXX-XXXX or XXXXXXXXXX</h3>
+  <p id="phoneNumber" class="invalid">Phone number is valid</p>
+</div>
+
+<div id="newPswMessage">
+  <h3>Password must contain the following:</h3>
+  <p id="pswLetter" class="invalid">A <b>lowercase</b> letter</p>
+  <p id="pswCapital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+  <p id="pswNumber" class="invalid">A <b>number</b></p>
+  <p id="pswSpecial" class="invalid">A <b>special character</b></p>
+  <p id="pswLength" class="invalid">Minimum <b>8 characters</b> and maximum <b>15 characters</b></p>
+</div>
+
+<div id="confirmPswMessage">
+    <h3>Passwords must match</h3>
+    <p id="confirmPswMsg" class="invalid">Passwords match</p>
+  </div>
+	
+<script>
+
+function checkValid() {
+  if(newUsrLength.classList.contains("valid") && emailSig.classList.contains("valid") && emailHost.classList.contains("valid") && emailEndSignature.classList.contains("valid")
+  && phoneValid.classList.contains("valid") && newPswLetter.classList.contains("valid") && newPswCapital.classList.contains("valid") && newPswNumber.classList.contains("valid")
+  && newPswSpecial.classList.contains("valid") && newPswlength.classList.contains("valid") && confirmValid.classList.contains("valid")) {
+    document.location.href = "index.html";
+  }
+  else {
+    document.getElementById("failedSignUP").innerHTML = "Signup has failed make sure all fields have been correctly filled out";
+  }
+}
+
+//User variables 
+var newUserInput = document.getElementById("newUsrname");
+var newUsrLength = document.getElementById("usrLength");
+
+//Email variables 
+var newEmailInput = document.getElementById("newEmail");
+var emailSig = document.getElementById("emailSignature");
+var emailHost = document.getElementById("emailHost");
+var emailEndSignature = document.getElementById("emailEndSignature");
+
+//Phone variables
+var newPhoneInput = document.getElementById("newPhone");
+var phoneValid = document.getElementById("phoneNumber");
+
+//Password variables
+var newPasswordInput = document.getElementById("newPsw");
+var newPswLetter = document.getElementById("pswLetter");
+var newPswCapital = document.getElementById("pswCapital");
+var newPswNumber = document.getElementById("pswNumber");
+var newPswSpecial = document.getElementById("pswSpecial");
+var newPswlength = document.getElementById("pswLength");
+
+//Confirm password variables
+var confirmPswInput = document.getElementById("confirmPsw");
+var confirmValid = document.getElementById("confirmPswMsg");
+
+
+
+//User clicks on username form and message is displayed 
+newUserInput.onfocus = function() {
+  document.getElementById("newUsrMessage").style.display = "block";
+}
+
+//When user clicks off the message is hidden
+newUserInput.onblur = function() {
+  document.getElementById("newUsrMessage").style.display = "none";
+}
+
+//User types something in username form 
+newUserInput.onkeyup = function() {
+  if(newUserInput.value.length >= 5 && newUserInput.value.length <= 20) {
+    newUsrLength.classList.remove("invalid");
+    newUsrLength.classList.add("valid");
+  } else {
+    newUsrLength.classList.remove("valid");
+    newUsrLength.classList.add("invalid");
+  }
+}
+
+//User clicks on email form and message is displayed 
+newEmailInput.onfocus = function() {
+  document.getElementById("newEmailMessage").style.display = "block";
+}
+
+//When user clicks off the message is hidden
+newEmailInput.onblur = function() {
+  document.getElementById("newEmailMessage").style.display = "none";
+}
+
+//User types something in email form 
+newEmailInput.onkeyup = function() {
+  var tokens = newEmailInput.value.split("@");
+  if(tokens[0] !== "" && tokens.length === 2) {
+  emailSig.classList.remove("invalid");
+  emailSig.classList.add("valid");
+  }
+  else {
+    emailSig.classList.remove("valid");
+    emailSig.classList.add("invalid");
+  }
+
+  var tokens2 = tokens[1].split(".");
+  if(tokens2[0] !== "" && tokens2.length === 2) {
+    emailHost.classList.remove("invalid");
+    emailHost.classList.add("valid");
+  }
+  else {
+    emailHost.classList.remove("valid");
+    emailHost.classList.add("invalid");
+  }
+
+  if(tokens2.length === 2) {
+    switch(tokens2[1]) {
+      case "com":
+      case "edu":
+      case "net":
+      case "gov":
+      emailEndSignature.classList.remove("invalid");
+      emailEndSignature.classList.add("valid");
+        break;
+      default:
+      emailEndSignature.classList.remove("valid");
+      emailEndSignature.classList.add("invalid");
+        break;
+    }
+  }
+
+}
+
+//User clicks on phone form and message is displayed 
+newPhoneInput.onfocus = function() {
+  document.getElementById("newPhoneNumberMessage").style.display = "block";
+}
+
+//When user clicks off the message is hidden
+newPhoneInput.onblur = function() {
+  document.getElementById("newPhoneNumberMessage").style.display = "none";
+}
+
+//User types something in phone form 
+newPhoneInput.onkeyup = function() {
+  var total = 0;
+  var tokens = newPhoneInput.value.split("-");
+  if(tokens.length === 1 || tokens.length === 3) {
+    for(var i = 0; i < tokens.length; i++) {
+        if(!isNaN(tokens[i])) {
+          total += tokens[i].length;
+        }
+    }
+  }
+  if(total === 10) {
+    phoneValid.classList.remove("invalid");
+    phoneValid.classList.add("valid");
+  }
+  else {
+    phoneValid.classList.remove("valid");
+    phoneValid.classList.add("invalid");
+  }
+}
+
+// When the user clicks on the password field, show the message box
+newPasswordInput.onfocus = function() {
+  document.getElementById("newPswMessage").style.display = "block";
+}
+
+// When the user clicks outside of the password field, hide the message box
+newPasswordInput.onblur = function() {
+  document.getElementById("newPswMessage").style.display = "none";
+}
+
+// When the user starts to type something inside the password field
+newPasswordInput.onkeyup = function() {
+  // Validate lowercase letters
+  var lowerCaseLetters = /[a-z]/g;
+  if(newPasswordInput.value.match(lowerCaseLetters)) {  
+    newPswLetter.classList.remove("invalid");
+    newPswLetter.classList.add("valid");
+  } else {
+    newPswLetter.classList.remove("valid");
+    newPswLetter.classList.add("invalid");
+  }
+  
+  // Validate capital letters
+  var upperCaseLetters = /[A-Z]/g;
+  if(newPasswordInput.value.match(upperCaseLetters)) {  
+    newPswCapital.classList.remove("invalid");
+    newPswCapital.classList.add("valid");
+  } else {
+    newPswCapital.classList.remove("valid");
+    newPswCapital.classList.add("invalid");
+  }
+
+  // Validate numbers
+  var numbers = /[0-9]/g;
+  if(newPasswordInput.value.match(numbers)) {  
+    newPswNumber.classList.remove("invalid");
+    newPswNumber.classList.add("valid");
+  } else {
+    newPswNumber.classList.remove("valid");
+    newPswNumber.classList.add("invalid");
+  }
+
+  var specials =  /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
+  if(newPasswordInput.value.match(specials)) {
+    newPswSpecial.classList.remove("invalid");
+    newPswSpecial.classList.add("valid");
+  }
+  else {
+    newPswSpecial.classList.remove("valid");
+    newPswSpecial.classList.add("invalid");
+  }
+  
+  // Validate length
+  if(newPasswordInput.value.length >= 8 && newPasswordInput.value.length <= 15) {
+    newPswlength.classList.remove("invalid");
+    newPswlength.classList.add("valid");
+  } else {
+    newPswlength.classList.remove("valid");
+    newPswlength.classList.add("invalid");
+  }
+}
+
+confirmPswInput.onfocus = function() {
+  document.getElementById("confirmPswMessage").style.display = "block";
+}
+
+//When user clicks off the message is hidden
+confirmPswInput.onblur = function() {
+  document.getElementById("confirmPswMessage").style.display = "none";
+}
+
+//User types something in username form 
+confirmPswInput.onkeyup = function() {
+  if(confirmPswInput.value.match(newPasswordInput.value)) {
+    confirmValid.classList.remove("invalid");
+    confirmValid.classList.add("valid");
+  }
+  else {
+    confirmValid.classList.remove("valid");
+    confirmValid.classList.add("invalid");
+  }
+}
+</script>
+
+</body>
+</html>
